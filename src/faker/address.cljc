@@ -43,11 +43,19 @@
   []
   (rand-nth ad/street-suffixes))
 
-(def ^{:private true} city-formats
-  [#(format "%s %s%s" (city-prefix) (na/first-name) (city-suffix))
-   #(format "%s %s" (city-prefix) (na/first-name))
-   #(format "%s%s" (na/first-name) (city-suffix))
-   #(format "%s%s" (na/last-name) (city-suffix))])
+#?(:clj
+   (def ^{:private true} city-formats
+   [#(format "%s %s%s" (city-prefix) (na/first-name) (city-suffix))
+    #(format "%s %s" (city-prefix) (na/first-name))
+    #(format "%s%s" (na/first-name) (city-suffix))
+    #(format "%s%s" (na/last-name) (city-suffix))]))
+
+#?(:cljs
+   (def ^{:private true} city-formats
+   [#(gstring/format "%s %s%s" (city-prefix) (na/first-name) (city-suffix))
+    #(gstring/format "%s %s" (city-prefix) (na/first-name))
+    #(gstring/format "%s%s" (na/first-name) (city-suffix))
+    #(gstring/format "%s%s" (na/last-name) (city-suffix))]))
 
 (defn city []
   "Returns a random city name."
