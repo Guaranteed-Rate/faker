@@ -2,7 +2,9 @@
   "Create fake company data"
   (:require [faker.name :as fkname]
             [clojure.string :refer [join]]
-            [faker.company-data :as cd]))
+            [faker.company-data :as cd]
+            #?(:cljs [goog.string :as gstring])
+            #?(:cljs [goog.string.format])))
 
 (defn suffix
   "Return a random company suffix, like Inc or Group."
@@ -22,10 +24,17 @@
   []
   (phrase cd/bs-words))
 
-(def ^{:private true} formats
-  [#(str (first (fkname/names)) " " (suffix))
-   #(str (fkname/last-name) "-" (fkname/last-name))
-   #(format "%s, %s and %s" (fkname/last-name) (fkname/last-name) (fkname/last-name))])
+#?(:clj
+   (def formats
+   [#(str (first (fkname/names)) " " (suffix))
+    #(str (fkname/last-name) "-" (fkname/last-name))
+    #(format "%s, %s and %s" (fkname/last-name) (fkname/last-name) (fkname/last-name))]))
+
+#?(:cljs
+   (def formats
+   [#(str (first (fkname/names)) " " (suffix))
+    #(str (fkname/last-name) "-" (fkname/last-name))
+    #(gstring/format "%s, %s and %s" (fkname/last-name) (fkname/last-name) (fkname/last-name))]))
 
 
 (defn names []
