@@ -53,9 +53,16 @@
   "Returns a random city name."
   ((rand-nth city-formats)))
 
-(def ^{:private true} street-formats
-  [#(format "%s %s" (na/last-name) (street-suffix))
-   #(format "%s %s" (na/first-name) (street-suffix))])
+
+#?(:clj
+   (def street-formats
+     [#(format "%s %s" (na/last-name) (street-suffix))
+      #(format "%s %s" (na/first-name) (street-suffix))]))
+
+#?(:cljs
+   (def street-formats
+  [#(gstring/format "%s %s" (na/last-name) (street-suffix))
+   #(gstring/format "%s %s" (na/first-name) (street-suffix))]))
 
 (defn street-name []
   "Returns a random street name."
