@@ -1,5 +1,5 @@
 (ns faker.core-test
-  (:use (faker name lorem phone-number internet address))
+  (:use (faker name lorem internet address))
   (:require [faker.company :as company])
   (:use
      clojure.test
@@ -19,9 +19,6 @@
   (is (take 10 (words)))
   (is (take 10 (sentences)))
   (is (take 10 (paragraphs))))
-
-(deftest test-phone-numbers
-  (is (take 10 (phone-numbers))))
 
 (deftest test-company
   (is (company/suffix))
