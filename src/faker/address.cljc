@@ -2,7 +2,9 @@
   "Create fake address data."
   (:require [faker.name :as na]
             [faker.address-data :as ad]
-            [clojure.string :as string]))
+            [clojure.string :as string]
+            #?(:cljs [goog.string :as gstring])
+            #?(:cljs [goog.string.format])))
 
 
 (defn- numerify [& formats]
